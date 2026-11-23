@@ -1,0 +1,160 @@
+{
+ "f": {
+  "wall0": {
+   "type": "image",
+   "file": "media/wall0.jpg"
+  },
+  "wall1": {
+   "type": "image",
+   "file": "media/wall1.jpg"
+  },
+  "wall2": {
+   "type": "image",
+   "file": "media/wall2.jpg"
+  },
+  "wall3": {
+   "type": "video",
+   "file": "media/wall3.mp4"
+  },
+  "wall4": {
+   "type": "image",
+   "file": "media/wall4.jpg"
+  },
+  "wall5": {
+   "type": "image",
+   "file": "media/wall5.jpg"
+  },
+  "wall6": {
+   "type": "image",
+   "file": "media/wall6.jpg"
+  },
+  "wall7": {
+   "type": "video",
+   "file": "media/wall7.mp4"
+  },
+  "wall8": {
+   "type": "image",
+   "file": "media/wall8.jpg"
+  },
+  "wall9": {
+   "type": "image",
+   "file": "media/wall9.jpg"
+  },
+  "wall10": {
+   "type": "image",
+   "file": "media/wall10.jpg"
+  },
+  "wall11": {
+   "type": "image",
+   "file": "media/wall11.jpg"
+  },
+  "pol0": {
+   "type": "image",
+   "file": "media/pol0.jpg"
+  },
+  "pol1": {
+   "type": "image",
+   "file": "media/pol1.jpg"
+  },
+  "pol2": {
+   "type": "image",
+   "file": "media/pol2.jpg"
+  },
+  "pol3": {
+   "type": "image",
+   "file": "media/pol3.jpg"
+  },
+  "pol4": {
+   "type": "video",
+   "file": "media/pol4.mp4"
+  },
+  "pol5": {
+   "type": "image",
+   "file": "media/pol5.jpg"
+  },
+  "pol6": {
+   "type": "image",
+   "file": "media/pol6.jpg",
+   "o": "l"
+  },
+  "pol7": {
+   "type": "image",
+   "file": "media/pol7.png"
+  },
+  "pol8": {
+   "type": "video",
+   "file": "media/pol8.mp4"
+  },
+  "pol9": {
+   "type": "image",
+   "file": "media/pol9.jpg"
+  },
+  "pol10": {
+   "type": "image",
+   "file": "media/pol10.jpg"
+  },
+  "pol11": {
+   "type": "image",
+   "file": "media/pol11.jpg"
+  },
+  "pol12": {
+   "type": "image",
+   "file": "media/pol12.jpg"
+  },
+  "pol13": {
+   "type": "video",
+   "file": "media/pol13.mp4"
+  },
+  "pol14": {
+   "type": "image",
+   "file": "media/pol14.jpg"
+  },
+  "pol15": {
+   "type": "image",
+   "file": "media/pol15.jpg"
+  },
+  "reels0": {
+   "type": "video",
+   "file": "media/reels0.mp4"
+  },
+  "reels1": {
+   "type": "video",
+   "file": "media/reels1.mp4"
+  },
+  "reels2": {
+   "type": "video",
+   "file": "media/reels2.mp4"
+  },
+  "reels3": {
+   "type": "video",
+   "file": "media/reels3.mp4"
+  },
+  "reels4": {
+   "type": "video",
+   "file": "media/reels4.mp4"
+  },
+  "reels5": {
+   "type": "video",
+   "file": "media/reels5.mp4"
+  },
+  "reels6": {
+   "type": "video",
+   "file": "media/reels6.mp4"
+  },
+  "reels7": {
+   "type": "video",
+   "file": "media/reels7.mp4"
+  },
+  "reels8": {
+   "type": "video",
+   "file": "media/reels8.mp4"
+  },
+  "reels9": {
+   "type": "video",
+   "file": "media/reels9.mp4"
+  }
+ },
+ "g": {
+  "reels": 10
+ }
+}
