@@ -70,13 +70,7 @@ body.n .bqw .ff,.ff.on{opacity:1}
 .bf svg{animation:fl .22s infinite alternate}@keyframes fl{to{transform:scaleX(.35)}}
 .veil{position:fixed;inset:0;z-index:40;pointer-events:none;opacity:.92}
 #cf,#ff{position:fixed;inset:0;pointer-events:none;z-index:90}#ff{z-index:2}
-.ed input[type=text]{font:inherit;padding:8px 12px;border-radius:10px;border:1px solid var(--pk);font-size:1rem}.ed label{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:.88rem}.row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
-.fr{cursor:pointer;position:relative}
-.fr-rot{position:absolute;top:6px;right:6px;z-index:20;border:0;border-radius:12px;padding:4px 9px;font-family:inherit;font-size:.76rem;font-weight:700;background:rgba(255,255,255,.95);color:#5a1630;box-shadow:0 2px 8px rgba(0,0,0,.28);cursor:pointer;touch-action:manipulation;transition:transform .2s,background .2s}
-.fr-rot:hover{transform:scale(1.08);background:#fff}
-.empty-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:4px;font-size:clamp(0.75rem,2.8vw,0.85rem);color:var(--pk);opacity:.9;padding:8px;cursor:pointer;text-align:center}
-.empty-placeholder:hover{opacity:1;transform:scale(1.04)}
-#eb{position:fixed;left:max(10px,env(safe-area-inset-left));bottom:max(10px,env(safe-area-inset-bottom));z-index:100;font-family:inherit;font-size:.88rem;display:flex;gap:8px;align-items:center;background:var(--card);padding:6px 12px;border-radius:30px;box-shadow:0 6px 24px rgba(0,0,0,.25);border:2px solid var(--pk);max-width:calc(100vw - 20px);flex-wrap:wrap}
+.fr{position:relative}
 #ts{position:fixed;top:max(60px,calc(env(safe-area-inset-top) + 40px));left:50%;transform:translateX(-50%);z-index:99;background:#5a1630;color:#fff;padding:8px 16px;border-radius:20px;font-size:.9rem;max-width:90vw;text-align:center}
 :focus-visible{outline:3px solid var(--pk);outline-offset:3px}
 @media(max-width:600px){
@@ -115,7 +109,6 @@ body.n .bqw .ff,.ff.on{opacity:1}
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <script>
 const NAME='Sanju',RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
-let EDIT=localStorage.getItem('editMode')!==null?localStorage.getItem('editMode')==='1':(!/[?&]view=1/.test(location.search));
 const L1=['Dear '+NAME+',','I made this little world for you. Scroll slowly, play the games, answer the quizzes, and find yourself in every frame.','Happy birthday to you sanjana 🎂💕💖🫶 . I am so so glad you exist 💖🫶.'];
 const L2=['Again,','A very happy birthday Sanjana, may God bless you, sending you all love and good wishes from my side. May universe give you the best everyday and bring laughter and joy to you, and wishing you great success for future. May you get all love that you deserve and be happy in all your coming birthdays 💖🫶','🎂💖🫶🤗'];
 const QZ=[[{q:'Where did we first meet?',o:['India Gate','Sunder Nursery','Garden of Sense'],a:0},{q:'Edit me: my favourite thing about you?',o:['Your smile','Your laugh','Everything'],a:2}]];
@@ -203,40 +196,54 @@ const spawn=()=>{if(n>=10)return;const e=h('button','bl',BL(COL[Math.random()*6|
 ScrollTrigger.create({trigger:b,start:'top 85%',end:'bottom top',onToggle:s=>{clearInterval(t);if(s.isActive)t=setInterval(spawn,700)}})})();
 $('#bq').innerHTML=bouquet();wander($('#bq').querySelectorAll('.bf,.ff'),40);
 /* frames */
-let S={f:{},g:{}},U={},T0;
-const DB=new Promise(r=>{try{const q=indexedDB.open('bday',1);q.onupgradeneeded=()=>q.result.createObjectStore('m');q.onsuccess=()=>r(q.result);q.onerror=()=>r(null)}catch{r(null)}});
-const idb=(m,k,v)=>DB.then(d=>d?new Promise((r,j)=>{const t=d.transaction('m',m==='get'?'readonly':'readwrite').objectStore('m'),q=m==='get'?t.get(k):m==='put'?t.put(v,k):t.delete(k);q.onsuccess=()=>r(q.result);q.onerror=()=>j(q.error)}):Promise.reject('no db'));
-const save=()=>idb('put','state',S).catch(()=>toast('Could not save in this browser. Export soon so nothing is lost.'));
+let S={f:{},g:{}};
 const io=new IntersectionObserver(es=>es.forEach(x=>x.isIntersecting?x.target.play().catch(()=>{}):x.target.pause()),{threshold:.4});
 function tr(e){const d=S.f[e.dataset.id],x=$('.m img,.m video',e);if(d&&x)x.style.transform=`translate(${d.x||0}%,${d.y||0}%) scale(${(d.z||1)*(d.sx||1)},${(d.z||1)*(d.sy||1)})`}
-function paint(e){const id=e.dataset.id,d=S.f[id],m=$('.m',e);e.dataset.o=d?.o||'p';$('.tg',e).textContent=d?.tag||'';m.innerHTML='';
-if(!d||!d.file){m.innerHTML=EDIT?'<div class="empty-placeholder"><span style="font-size:1.8rem;display:block">📷</span><span>Click to add photo/video</span></div>':'<span class="em">♡</span>'}
-else{const v=d.type==='video',x=document.createElement(v?'video':'img');x.src=U[id]||d.file;x.alt=d.tag||'';
-if(v){x.muted=x.loop=x.playsInline=true;x.preload='metadata';x.onloadedmetadata=()=>{if(d.a)x.currentTime=d.a};x.ontimeupdate=()=>{if(d.b&&x.currentTime>=d.b)x.currentTime=d.a||0};io.observe(x)}
-x.onerror=()=>{m.innerHTML='<span class="em">Media missing</span>'};m.append(x);tr(e)}
-const oldB=$('.fr-rot',e);if(oldB)oldB.remove();
-if(EDIT){const rb=h('button','fr-rot',d?.o==='l'?'↕ Tall':'↔ Wide');rb.title='Toggle orientation';rb.onclick=ev=>{ev.stopPropagation();const item=S.f[id]=S.f[id]||{type:'image'};item.o=item.o==='l'?'p':'l';paint(e);save()};e.append(rb)}}
+function paint(e){
+  const id=e.dataset.id,d=S.f[id],m=$('.m',e);
+  e.dataset.o=d?.o||'p';
+  $('.tg',e).textContent=d?.tag||'';
+  m.innerHTML='';
+  if(!d||!d.file){m.innerHTML='<span class="em">♡</span>';return}
+  const v=d.type==='video',x=document.createElement(v?'video':'img');
+  x.src=d.file;
+  x.alt=d.tag||'';
+  if(v){
+    x.muted=x.loop=x.playsInline=true;
+    x.preload='metadata';
+    x.onloadedmetadata=()=>{if(d.a)x.currentTime=d.a};
+    x.ontimeupdate=()=>{if(d.b&&x.currentTime>=d.b)x.currentTime=d.a||0};
+    io.observe(x);
+  }
+  x.onerror=()=>{m.innerHTML='<span class="em">Media missing</span>'};
+  m.append(x);
+  tr(e);
+}
 function frame(g,i){const e=h('div','fr','<div class="m"></div><div class="tg"></div>');e.dataset.id=g+i;paint(e);return e}
-function build(){document.querySelectorAll('.grp').forEach(c=>{const g=c.dataset.g,n=S.g[g]||+c.dataset.n;c.innerHTML='';for(let i=0;i<n;i++)c.append(frame(g,i));
-if(EDIT){const b=h('button','add','+ Add frame');b.onclick=()=>{S.g[g]=(S.g[g]||+c.dataset.n)+1;c.insertBefore(frame(g,S.g[g]-1),b);save()};c.append(b)}});
-if(!RM){gsap.to('.wall .fr',{rotation:i=>i%2?2.5:-2.5,yoyo:true,repeat:-1,duration:3,ease:'sine.inOut',stagger:.25});gsap.set('.pol .fr',{rotation:()=>Math.random()*14-7})}
-ScrollTrigger.refresh()}
-async function load(){try{if(EDIT){const s=await idb('get','state');if(s)S=s;for(const id in S.f)if(S.f[id].local){const b=await idb('get','b:'+id);if(b)U[id]=URL.createObjectURL(b)}}}catch{}
-if(!Object.keys(S.f).length)try{const r=await fetch('data.json',{cache:'no-cache'});if(r.ok)S=await r.json()}catch{}
-build();updateEditBar()}
-document.addEventListener('click',ev=>{const e=ev.target.closest('.fr');if(!e||ev.target.closest('.fr-rot'))return;if(!EDIT){const v=$('video',e);if(v)v.muted=!v.muted;return}edit(e)});
-const SL=[['z','Zoom (crop)',1,3,.05,1],['x','Move left / right',-50,50,1,0],['y','Move up / down',-50,50,1,0],['sx','Stretch width',.5,2,.05,1],['sy','Stretch height',.5,2,.05,1],['a','Video trim start (s)',0,300,.1,0],['b','Video trim end (s, 0 = full)',0,300,.1,0]];
-function edit(e){const id=e.dataset.id,old=JSON.stringify(S.f[id]||null),oldU=U[id],d=S.f[id]=S.f[id]||{type:'image'};let file=null;
-const o=h('div','pop ed');o.innerHTML='<div class="pc" data-lenis-prevent><h2>Edit frame ('+id+')</h2><input type="file" id="fi" accept="image/*,video/*"><input type="text" id="ft" placeholder="Tag or caption" maxlength="40" value="'+(d.tag||'').replace(/"/g,'&quot;')+'"><div style="display:flex;gap:8px;justify-content:center"><button type="button" id="or" class="bt" style="padding:6px 14px;font-size:.9rem">Orientation: '+(d.o==='l'?'Landscape ↔':'Portrait ↕')+'</button></div>'+SL.map(s=>`<label>${s[1]}<input type="range" data-k="${s[0]}" min="${s[2]}" max="${s[3]}" step="${s[4]}" value="${d[s[0]]??s[5]}"></label>`).join('')+'<div class="row"><button id="sv">Save</button><button id="cl">Cancel</button><button id="rm">Remove</button></div><p class="sm" id="er"></p></div>';document.body.append(o);
-const close=()=>o.remove(),er=t=>$('#er',o).textContent=t;
-$('#or',o).onclick=()=>{d.o=d.o==='l'?'p':'l';$('#or',o).textContent='Orientation: '+(d.o==='l'?'Landscape ↔':'Portrait ↕');paint(e)};
-$('#fi',o).onchange=ev=>{file=ev.target.files[0];if(!file)return;if(file.size>40e6)er('Large file. Compress it for faster loading on her phone.');const ext=(file.name.split('.').pop()||'bin').toLowerCase();d.type=file.type.startsWith('video')?'video':'image';d.file='media/'+id+'.'+ext;d.local=1;U[id]=URL.createObjectURL(file);paint(e)};
-o.querySelectorAll('input[type=range]').forEach(r=>r.oninput=()=>{d[r.dataset.k]=+r.value;tr(e);const v=$('video',e);if(v&&r.dataset.k==='a')v.currentTime=+r.value});
-$('#ft',o).oninput=ev=>{d.tag=ev.target.value;$('.tg',e).textContent=d.tag};
-$('#sv',o).onclick=async()=>{try{if(file)await idb('put','b:'+id,file)}catch{return er('Could not store this file in the browser. Try a smaller file.')}await save();close()};
-$('#cl',o).onclick=()=>{if(old==='null')delete S.f[id];else S.f[id]=JSON.parse(old);U[id]=oldU;paint(e);close()};
-$('#rm',o).onclick=async()=>{delete S.f[id];delete U[id];try{await idb('del','b:'+id)}catch{}paint(e);save();close()}}
-async function exp(){const b=$('#ex');b.textContent='Preparing zip…';try{await new Promise((r,j)=>{const s=h('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';s.onload=r;s.onerror=j;document.head.append(s)});const z=new JSZip(),O={};for(const id in S.f){const d=S.f[id];O[id]={...d};delete O[id].local;if(d.local){const bl=await idb('get','b:'+id);if(bl)z.file(d.file,bl)}}z.file('data.json',JSON.stringify({f:O,g:S.g},null,1));const bl=await z.generateAsync({type:'blob',compression:'STORE'}),a=h('a');a.href=URL.createObjectURL(bl);a.download='birthday-media.zip';a.click()}catch{toast('Export failed. Check your connection and try again.')}b.textContent='Export for Vercel'}
-function updateEditBar(){let eb=$('#eb');if(!eb){eb=h('div','');eb.id='eb';document.body.append(eb)}eb.innerHTML=`<button id="tb" class="bt" style="padding:6px 14px;font-size:.9rem">${EDIT?'✏️ Edit Mode: ON':'👁️ View Mode'}</button>${EDIT?'<button id="ex" class="bt" style="padding:6px 14px;font-size:.9rem">Export for Vercel</button>':''}`;$('#tb').onclick=()=>{EDIT=!EDIT;localStorage.setItem('editMode',EDIT?'1':'0');updateEditBar();build()};const ex=$('#ex');if(ex)ex.onclick=exp}
+function build(){
+  document.querySelectorAll('.grp').forEach(c=>{
+    const g=c.dataset.g,n=S.g[g]||+c.dataset.n;
+    c.innerHTML='';
+    for(let i=0;i<n;i++)c.append(frame(g,i));
+  });
+  if(!RM){
+    gsap.to('.wall .fr',{rotation:i=>i%2?2.5:-2.5,yoyo:true,repeat:-1,duration:3,ease:'sine.inOut',stagger:.25});
+    gsap.set('.pol .fr',{rotation:()=>Math.random()*14-7});
+  }
+  ScrollTrigger.refresh();
+}
+async function load(){
+  try{
+    const r=await fetch('data.json',{cache:'no-cache'});
+    if(r.ok)S=await r.json();
+  }catch{}
+  build();
+}
+document.addEventListener('click',ev=>{
+  const e=ev.target.closest('.fr');
+  if(!e)return;
+  const v=$('video',e);
+  if(v)v.muted=!v.muted;
+});
 load();
 </script></body></html>
